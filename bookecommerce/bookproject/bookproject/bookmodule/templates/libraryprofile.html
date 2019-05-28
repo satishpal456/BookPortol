@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+<!-- {{ user.username }} 
+{{ user.email }}
+{{ user.first_name }} 
+{{ user.last_name }} <br>
+nameOfLibrary: {{ user.libraryprofile.nameOfLibrary }} <br>
+{{ user.libraryprofile.Phone }}  -->
+
+{% load static %}
+
+{% block bookdisplay %}
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
+
+<div class="container">
+	<h1 class="text-center page-header">My Profile</h1>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="col-sm-4">
+				{% if user.libraryprofile.librarySymbol %}
+				<img src="{{ user.libraryprofile.librarySymbol.url }}" alt=" " class="img-responsive" style="height: 350px;" />
+				  {% endif %}
+			</div>
+			<div class="col-sm-6 col-sm-offset-1">
+				<h3>Username : <label>{{ user.username }} </label></h3>
+				<h3>E-mail : <label>{{ user.email }} </label></h3>
+				<h3>Phone: <label>{{ user.libraryprofile.Phone }} </label></h3>
+				<h3>Date Of Estiblishment: <label>{{ user.libraryprofile.dateOfEstablishment }} </label></h3>
+				<h3>Time: <label>{{ user.libraryprofile.time }} </label></h3>
+				<!-- <h3>Email: <label>{{ user.libraryprofile.email }} </label></h3> -->
+				<h3>Website: <label><a href="{{ user.libraryprofile.librarywebsite }}">{{ user.libraryprofile.librarywebsite }}</a> </label></h3>
+				<h3>Policy: <label>{{ user.libraryprofile.libraryPolicy }} </label></h3>
+				<h3>Membership: <label>{{ user.libraryprofile.libraryMembership }} </label></h3>
+			</div>
+			
+			
+		</div>
+	</div>
+<br><br><br><br>
+</div>
+
+{% endblock %}

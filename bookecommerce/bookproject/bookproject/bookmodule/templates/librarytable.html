@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% load static %}
+
+
+{% block bookdisplay %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Library Table</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+</head>
+<style type="text/css">
+  .hovereffect:hover{
+    background-color: #84C639;
+  }
+</style>
+<body style="background: linear-gradient(to left,lightgreen,pink)!important;">
+<div class="jumbotron text-center addbooktitle" style="background-color: #212121;border: 0px;">
+  <h1 style="color: white;" class="titletextaddbook">Book List</h1>      
+</div>
+<div class="container" style="color: black;">
+  <table class="table table-bordered text-center table-striped">
+    <thead>
+      <tr style="background-color:#333">
+        <th class="text-center" style="color: white"><b>Book Name</b></th>
+        <th class="text-center" style="color: white">Language</th>
+        <th class="text-center" style="color: white">Stock</th>
+        <th class="text-center" style="color: white">Delete</th>
+        <th class="text-center" style="color: white">Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+       {% for x in librarybookDisp %}
+      <tr >
+        <td style="color: black" class="hovereffect"><b>{{x.bookName}}</b></td>
+        <td style="color: black" class="hovereffect"><b>{{x.bookLanguage}}</b></td>
+        <td style="color: black" class="hovereffect"><b>{{x.bookStock}}</b></td>
+
+        <td class="hovereffect"><a href="{% url 'libraryDeleteBook' x.id %}"><button class="btn btn-danger border0" style="border-radius: 0px;">Delete</button></a></td>
+        <td class="hovereffect"><a href="{% url 'libraryTableUpdate' x.id %}"><button class="btn btn-info" style="border-radius: 0px;">Edit</button></a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br><br><br>
+</div>
+
+</body>
+</html>
+
+
+{% endblock %}

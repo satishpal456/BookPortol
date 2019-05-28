@@ -1,0 +1,60 @@
+<html >
+{% load easy_maps_tags %}
+{% easy_map "India, Vadodara, Mira 32" 300 400 %}
+
+<body onLoad="initialize()">
+                  <div class="col-sm-offset-1" id="map_canvas" style="width:1200; height:500"></div>
+                  <br>
+                  <input type="text" id="lat" value='36.85341604753753'>
+                  <input type="text" id="lng" value='10.176080866332995'>   
+                  <input type="button" onclick="initialize();" value="Click to view map">         
+<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script> 
+{% load easy_maps_tags cache %}
+
+{% cache 600 my_map firm.address %}
+    {% easy_map firm.address 400 400 %}
+{% endcache %}
+<style>
+  body{
+    text-align:center;
+  }
+  .gmap3{
+    margin: 20px auto;
+    border: 1px dashed #C0C0C0;
+    width: 500px;
+    height: 500px;
+  }
+</style>    
+<script type="text/javascript">
+   var map;
+ function initialize() {
+ var myLatlng = new google.maps.LatLng(document.getElementById("lat").value,document.getElementById("lng").value);
+ var myOptions = {
+ zoom: 14,
+ minZoom:14,
+ center: myLatlng,
+ draggable:true,
+ mapTypeId: google.maps.MapTypeId.SATELLITE
+ }
+map = new google.maps.Map(document.getElementById("map_canvas"), myOptions); 
+
+ var marker = new google.maps.Marker({
+
+
+draggable: true,
+position: myLatlng, 
+map: map,
+  });
+google.maps.event.addListener(marker, 'dragend', function (event) {
+document.getElementById("lat").value = this.getPosition().lat();
+document.getElementById("lng").value = this.getPosition().lng();
+}
+);
+ g = geocoders.GoogleV3('AIzaSyB7eUwAGquOYhZJMHLRhYvrnjPPuLlxeTk');    
+}
+</script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,777 @@
+{% load auth_extras %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Agile Practice of E-Library</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Grocery Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+<!-- JS file -->
+<script src="{% static 'js/jquery.easy-autocomplete.min.js' %}"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- CSS file -->
+<link rel="stylesheet" href="{% static 'css/easy-autocomplete.min.css' %}"> 
+
+<!-- Additional CSS Themes file - not required-->
+<link rel="stylesheet" href="{% static 'css/easy-autocomplete.themes.min.css' %}"> 
+
+
+<!-- //for-mobile-apps -->
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
+<!-- font-awesome icons -->
+<link href="{% static  'css/font-awesome.css' %}" rel="stylesheet" type="text/css" media="all" /> 
+<!-- //font-awesome icons -->
+<!-- js -->
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+<!-- <script src="{% static  'js/jquery-1.11.1.min.js' %}"></script> -->
+<!-- //js -->
+<link href='//fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<!-- start-smoth-scrolling -->
+<script type="text/javascript" src="{% static 'js/move-top.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/easing.js' %}"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){		
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+</script>
+<!-- start-smoth-scrolling -->
+</head>
+	
+<body onload="locations()">
+<!-- header -->
+	<!-- library navbar -->
+	{% if request.user|has_group:"library" %}
+	<div class="agileits_header">
+		<div class="w3l_offers">
+			<a href="products.html">Library </a>
+		</div>
+		<div class="w3l_search">
+			<form action="/search/" method="post">
+				{% csrf_token %}
+				<input type="text" name="booksearch" value="Enter book name or city" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required="" id="template-icon-right" class="locationdata">
+				<input type="submit" value=" ">
+			</form>
+		</div>
+		<!-- <div class="product_list_header">  
+			<form action="#" method="post" class="last">
+                <fieldset>
+                    <input type="hidden" name="cmd" value="_cart" disabled />
+                    <input type="hidden" name="display" value="1" />
+                    <input type="submit" name="submit" value="View your cart" class="button" />
+                </fieldset>
+            </form>
+		</div> -->
+		<div class="w3l_header_right">
+			<ul>
+				<li class="dropdown profile_details_drop">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+					<div class="mega-dropdown-menu">
+						<div class="w3ls_vegetables">
+							<ul class="dropdown-menu drp-mnu">
+								<li><a href="{% url 'logout' %}">logout</a></li>
+								
+							</ul>
+						</div>                  
+					</div>	
+				</li>
+			</ul>
+		</div>
+		<div class="w3l_header_right1">
+			<h2><a href="{% url 'view_profile_with_pk' user.pk %}">Profile</a></h2>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+
+	<!-- library display book -->
+
+	<!-- library add book -->
+	<div class="logo_products">
+		<div class="container">
+			<div class="w3ls_logo_products_left">
+				<h1><a href="{% url 'home' %}"><span></span> </a></h1>
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="special_items">
+					<li><a href="{% url 'libraryaddbook' %}">Add book</a><i>/</i></li>
+					<li><a href="{% url 'librarybook' %}">View Book</a><i>/</i></li>
+					<li><a href="{% url 'libraryTable' %}">Manage Book</a></li>
+					
+				</ul>
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="phone_email">
+					<li><i class="fa fa-phone" aria-hidden="true"></i>7016931466</li>
+					<li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:agilelibrary@gmail.com">agilelibrary@gmail.com</a></li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+
+
+<!-- library sidebar -->
+{% block slider %}
+{% endblock %}
+
+
+
+
+	<!-- library display book -->
+	{% block bookdisplay %}
+	{% endblock %}
+{% block maps %}
+{% endblock %}
+	{% if messages %}
+  <ul class="messages text-center">
+    {% for message in messages %}
+      <li class="{{ message.tags }}"><h1 style="color: red"><i class='fas fa-dizzy' style='font-size:48px;color:red'></i>&nbsp;{{ message }}</h1></li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+<br><br><br>
+
+<script type="text/javascript">
+	function locations(){
+$.get("https://ipinfo.io", function(response) {
+		document.getElementById("template-icon-right").value=response.city
+  console.log(response.city);
+}, "jsonp")
+}
+</script>
+	<!-- seller navbar -->
+
+	{% elif request.user|has_group:"seller" %}
+	<div class="agileits_header">
+		<div class="w3l_offers">
+			<a href="products.html">seller</a>
+		</div>
+		<div class="w3l_search">
+			<form action="#" method="">
+				<input type="text" name="Product" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required="">
+				<input type="submit" value=" ">
+			</form>
+		</div>
+		<div class="product_list_header">  
+			<form action="#" method="post" class="last">
+                <fieldset>
+                    <input type="hidden" name="cmd" value="_cart" />
+                    <input type="hidden" name="display" value="1" />
+                    <input type="submit" name="submit" value="View your cart" class="button" />
+                </fieldset>
+            </form>
+		</div>
+		<div class="w3l_header_right">
+			<ul>
+				<li class="dropdown profile_details_drop">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+					<div class="mega-dropdown-menu">
+						<div class="w3ls_vegetables">
+							<ul class="dropdown-menu drp-mnu">
+								<li><a href="{% url 'logout' %}">logout</a></li>
+								
+							</ul>
+						</div>                  
+					</div>	
+				</li>
+			</ul>
+		</div>
+		<div class="w3l_header_right1">
+			<h2><a href="{% url 'view_profile_with_seller' user.pk %}">Profile</a></h2>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+
+	<!-- add seller book -->
+
+	
+			<div class="w3ls_logo_products_left1">
+				<ul class="special_items">
+					<li><a href="{% url 'selleraddbook' %}">Add book</a><i>/</i></li>
+					<li><a href="{% url 'sellerbook' %}">View Book</a><i>/</i></li>
+					<li><a href="{% url 'sellerTable' %}">Manage Book</a></li>
+				</ul>
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="phone_email">
+					<li><i class="fa fa-phone" aria-hidden="true"></i>7016324306</li>
+					<li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:agilelibrary@gmail.com">agilelibrary@gmail.com</a></li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+
+
+{% block sellerbookdisplay %}
+	{% endblock %}
+	<!-- seller side bar -->
+	
+	{% elif request.user|has_group:"user" %}
+	<div class="agileits_header">
+		<div class="w3l_offers">
+			<a href="products.html"> user </a>
+		</div>
+		<div class="w3l_search">
+			<form action="#" method="post">
+				<input type="text" name="Product" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required="">
+				<input type="submit" value=" ">
+			</form>
+		</div>
+		<div class="product_list_header">  
+			<form action="#" method="post" class="last">
+                <fieldset>
+                    <input type="hidden" name="cmd" value="_cart" />
+                    <input type="hidden" name="display" value="1" />
+                    <input type="submit" name="submit" value="View your cart" class="button" />
+                </fieldset>
+            </form>
+		</div>
+		<div class="w3l_header_right">
+			<ul>
+				<li class="dropdown profile_details_drop">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+					<div class="mega-dropdown-menu">
+						<div class="w3ls_vegetables">
+							<ul class="dropdown-menu drp-mnu">
+								<li><a href="{% url 'logout' %}">logout</a></li>
+								
+							</ul>
+						</div>                  
+					</div>	
+				</li>
+			</ul>
+		</div>
+		<div class="w3l_header_right1">
+			<h2><a href="{% url 'view_bookprofile_with_user' user.pk %}">Profile</a></h2>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+	<!-- add user book -->
+
+	<div class="logo_products">
+		<div class="container">
+			<div class="" style="float: left;">
+				<h1><a href="index.html"><h1><a href="#"><img src="{% static 'images/home.png' %}" style="height: 100px;"></h1>
+			</div>
+
+			<div class="w3ls_logo_products_left1" style="float: right;">
+				<ul class="special_items">
+					<li><a href="{% url 'useraddbook'%}">Add book</a><i>/</i></li>
+					<li><a href="{% url 'userbook' %}">View Book</a><i>/</i></li>
+					<li><a href="{% url 'userTable' %}">Manage Book</a></li>
+				</ul>
+			</div>
+			<div class="w3ls_logo_products_left1" style="float: right;">
+				<ul class="phone_email">
+					<li><i class="fa fa-phone" aria-hidden="true"></i>7016324306</li>
+					<li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:agilelibrary@gmail.com">agilelibrary@gmail.com</a></li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+
+{% block userbookdisplay %}
+	{% endblock %}
+<!-- user sidebar -->
+{% else %}
+<div class="agileits_header">
+		<div class="w3l_offers">
+			<a href="products.html"> Home </a>
+		</div>
+		<div class="w3l_search">
+			<form action="#" method="post">
+				<input type="text" name="Product" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required="">
+				<input type="submit" value=" ">
+			</form>
+		</div>
+		<div class="w3l_header_right">
+			<ul>
+				<li class="dropdown profile_details_drop">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
+					<div class="mega-dropdown-menu">
+						<div class="w3ls_vegetables">
+							<ul class="dropdown-menu drp-mnu">
+								<li><a href="{% url 'login' %}">Login</a></li> 
+								<li><a href="{% url 'registrationBlocks' %}">Sign Up</a></li>
+								
+							</ul>
+						</div>                  
+					</div>	
+				</li>
+			</ul>
+		</div>
+
+		<!-- <div class="product_list_header">  
+			<form action="#" method="post" class="last">
+                <fieldset>
+                    <input type="hidden" name="cmd" value="_cart" />
+                    <input type="hidden" name="display" value="1" />
+                    <input type="submit" name="submit" value="View your cart" class="button" />
+                </fieldset>
+            </form>
+		</div> -->
+
+		<div class="w3l_header_right">
+			<ul>
+				<li class="dropdown profile_details_drop">
+					<!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a> -->
+					<div class="mega-dropdown-menu">
+						<div class="w3ls_vegetables">
+							<ul class="dropdown-menu drp-mnu">
+								<li><a href="login.html">Login</a></li> 
+								<li><a href="login.html">Sign Up</a></li>
+								<li><a href="{% url 'logout' %}">logout</a></li>
+								
+							</ul>
+						</div>                  
+					</div>	
+				</li>
+			</ul>
+		</div>
+
+		<div class="w3l_header_right1">
+			
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+	<div class="logo_products">
+		<div class="container">
+			<div class="w3ls_logo_products_left" style="max-height: 50px;">
+				<h1><a href="#"><img src="{% static 'images/home.png' %}" style="height: 100px;">
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="special_items">
+					<li><a href="#">Home</a><i>/</i></li>
+					<li><a href="{% url 'login' %}">Login</a><i>/</i></li>
+					<li><a href="{% url 'libraryTable' %}">Contact Us</a></li>
+					
+				</ul>
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="phone_email">
+					<li><i class="fa fa-phone" aria-hidden="true"></i>7016324306</li>
+					<li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:agilelibrary@gmail.com">agilelibrary@gmail.com</a></li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+	{% block sellerREgistration %}
+	{% endblock %}
+	{% block registrationBlock %}
+	{% endblock %}
+{% block login %}
+{% endblock %}
+
+	{% endif %}
+
+
+<!-- script-for sticky-nav -->
+	<script>
+	$(document).ready(function() {
+		 var navoffeset=$(".agileits_header").offset().top;
+		 $(window).scroll(function(){
+			var scrollpos=$(window).scrollTop(); 
+			if(scrollpos >=navoffeset){
+				$(".agileits_header").addClass("fixed");
+			}else{
+				$(".agileits_header").removeClass("fixed");
+			}
+		 });
+		 
+	});
+
+// 	$.get("https://ipinfo.io", function(response) {
+// 		document.getElementsByClassName("locationdata").value=response.city
+//   console.log( response.city);
+// }, "jsonp")
+
+function locations(){
+$.get("https://ipinfo.io", function(response) {
+		document.getElementById("template-icon-right").value=response.city
+  console.log(response.city);
+}, "jsonp")
+}
+	</script>
+<!-- //script-for sticky-nav -->
+	<!-- <div class="logo_products">
+		<div class="container">
+			<div class="w3ls_logo_products_left">
+				<h1><a href="index.html"><span>Grocery</span> Store</a></h1>
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="special_items">
+					<li><a href="events.html">Events</a><i>/</i></li>
+					<li><a href="about.html">About Us</a><i>/</i></li>
+					<li><a href="products.html">Best Deals</a><i>/</i></li>
+					<li><a href="services.html">Services</a></li>
+				</ul>
+			</div>
+			<div class="w3ls_logo_products_left1">
+				<ul class="phone_email">
+					<li><i class="fa fa-phone" aria-hidden="true"></i>7016324306</li>
+					<li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:agilelibrary@gmail.com">agilelibrary@gmail.com</a></li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div> -->
+<!-- //header -->
+<!-- banner -->
+<!-- banner -->
+	<!-- <div class="banner_bottom">
+			<div class="wthree_banner_bottom_left_grid_sub">
+			</div>
+			<div class="wthree_banner_bottom_left_grid_sub1">
+				<div class="col-md-4 wthree_banner_bottom_left">
+					<div class="wthree_banner_bottom_left_grid">
+						<img src="{% static  'images/4.jpg' %}" alt=" " class="img-responsive" />
+						<div class="wthree_banner_bottom_left_grid_pos">
+							<h4>Discount Offer <span>25%</span></h4>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 wthree_banner_bottom_left">
+					<div class="wthree_banner_bottom_left_grid">
+						<img src="{% static  'images/5.jpg' %}" alt=" " class="img-responsive" />
+						<div class="wthree_banner_btm_pos">
+							<h3>introducing <span>best store</span> for <i>groceries</i></h3>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 wthree_banner_bottom_left">
+					<div class="wthree_banner_bottom_left_grid">
+						<img src="{% static  'images/6.jpg' %}" alt=" " class="img-responsive" />
+						<div class="wthree_banner_btm_pos1">
+							<h3>Save <span>Upto</span> $10</h3>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="clearfix"> </div>
+	</div> -->
+<!-- top-brands -->
+<!-- 	<div class="top-brands">
+		<div class="container">
+			<h3>Hot Offers</h3>
+			<div class="agile_top_brands_grids">
+				<div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="agile_top_brand_left_grid">
+							<div class="tag"><img src="images/tag.png" alt=" " class="img-responsive" /></div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block" >
+										<div class="snipcart-thumb">
+											<a href="single.html"><img title=" " alt=" " src="images/1.png" /></a>		
+											<p>fortune sunflower oil</p>
+											<h4>$7.99 <span>$10.00</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="checkout.html" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="Fortune Sunflower Oil" />
+													<input type="hidden" name="amount" value="7.99" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+													
+											</form>
+									
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block" >
+										<div class="snipcart-thumb">
+											<a href="single.html"><img title=" " alt=" " src="images/3.png" /></a>		
+											<p>basmati rise (5 Kg)</p>
+											<h4>$11.99 <span>$15.00</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="basmati rise" />
+													<input type="hidden" name="amount" value="11.99" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid_pos">
+								<img src="images/offer.png" alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src="images/2.png" alt=" " class="img-responsive" /></a>
+											<p>Pepsi soft drink (2 Ltr)</p>
+											<h4>$8.00 <span>$10.00</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="Pepsi soft drink" />
+													<input type="hidden" name="amount" value="8.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="agile_top_brand_left_grid">
+							<div class="agile_top_brand_left_grid_pos">
+								<img src="images/offer.png" alt=" " class="img-responsive" />
+							</div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block">
+										<div class="snipcart-thumb">
+											<a href="single.html"><img src="images/4.png" alt=" " class="img-responsive" /></a>
+											<p>dogs food (4 Kg)</p>
+											<h4>$9.00 <span>$11.00</span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="dogs food" />
+													<input type="hidden" name="amount" value="9.00" />
+													<input type="hidden" name="discount_amount" value="1.00" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Add to cart" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div> -->
+<!-- //top-brands -->
+<!-- fresh-vegetables -->
+	
+<!-- //fresh-vegetables -->
+<!-- newsletter -->
+	<div class="newsletter">
+		<div class="container">
+			<div class="w3agile_newsletter_left">
+				<h3>sign up for our newsletter</h3>
+			</div>
+			<div class="w3agile_newsletter_right">
+				<form action="#" method="post">
+					<input type="email" name="Email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
+					<input type="submit" value="subscribe now">
+				</form>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+<!-- //newsletter -->
+<!-- footer -->
+	<div class="footer">
+		<div class="container">
+			<div class="col-md-4 w3_footer_grid">
+				<h3>Our Services:</h3>
+				<ul class="w3_footer_grid_list">
+					<li><a href="#">Rent Books</a></li>
+					<li><a href="#">Sell Books </a></li>
+					<li><a href="products.html">Donate Books</a></li>
+					<li><a href="services.html">Provide information about Books</a></li>
+					
+				</ul>
+			</div>
+			<div class="col-md-4 w3_footer_grid">
+				<h3>Our Policies:</h3>
+				<ul class="w3_footer_grid_list">
+					<li><a href="faqs.html">FAQ</a></li>
+					<li><a href="{% url 'policy' %}">privacy policy</a></li>
+					<li><a href="{% url 'terms' %}">Terms and Condition</a></li>
+				</ul>
+			</div>
+			<div class="col-md-4 w3_footer_grid">
+				<h3>We provide various types of books like:</h3>
+				<ul class="w3_footer_grid_list">
+					<li><a href="#">Action and adventure	</a></li>
+					<li><a href="#">Alternate history	</a></li>
+					<li><a href="#">Autobiography</a></li>
+					<li><a href="#">Drama</a></li>
+					<li><a href="#">Horror</a></li>
+					<li><a href="#">& Many More</a></li>
+				</ul>
+			</div>
+			
+			</div>
+			<div class="clearfix"> </div>
+			<div class="agile_footer_grids">
+				<div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+					<div class="w3_footer_grid_bottom">
+						<h4>100% secure payments</h4>
+						<img src="{% static 'images/card.png' %}" alt=" " class="img-responsive" />
+					</div>
+				</div>
+				<div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+					<div class="w3_footer_grid_bottom">
+						<h5>connect with us</h5>
+						<ul class="agileits_social_icons">
+							<!-- <li><a href="" class="facebook"><i class="fa fa-facebook" aria-hidden="true"><img src="{% static 'images/facebook.png' %}"></i></a></li> -->
+							<li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+							<li><a href="#" class="google"><i class="fa fa-google-plus %aria-hidden="true"></i></a></li>
+							<li><a href="#" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+							<li><a href="#" class="dribbble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="wthree_footer_copy">
+				<p>Designed By: <a href="http://w3layouts.com/">Assistant Professor Monika Kohli and Team</a></p>
+			</div>
+		</div>
+	</div>
+<!-- //footer -->
+<!-- Bootstrap Core JavaScript -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script>
+$(document).ready(function(){
+    $(".dropdown").hover(            
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).slideDown("fast");
+            $(this).toggleClass('open');        
+        },
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+            $(this).toggleClass('open');       
+        }
+    );
+});
+</script>
+<!-- here stars scrolling icon -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			/*
+				var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+				};
+			*/
+								
+			$().UItoTop({ easingType: 'easeOutQuart' });
+								
+			});
+	</script>
+<!-- //here ends scrolling icon -->
+<script src="{% static 'js/minicart.js' %}"></script>
+<script>
+		paypal.minicart.render();
+
+		paypal.minicart.cart.on('checkout', function (evt) {
+			var items = this.items(),
+				len = items.length,
+				total = 0,
+				i;
+
+			// Count the number of each item in the cart
+			for (i = 0; i < len; i++) {
+				total += items[i].get('quantity');
+			}
+
+			if (total < 1) {
+				alert('The minimum order quantity is 1. Please add more to your shopping cart before checking out');
+				evt.preventDefault();
+			}
+		});
+
+	</script>
+
+	<script type="text/javascript">
+	var options = {
+	data: [ {name: "Avionet", type: "air", icon: "{% static 'images/1.jpg' %}"},
+		{name: "Car", type: "ground", icon: "http://lorempixel.com/100/50/transport/8"},
+		{name: "Motorbike", type: "ground", icon: "http://lorempixel.com/100/50/transport/10"},
+		{name: "Plain", type: "air", icon: "http://lorempixel.com/100/50/transport/1"},
+		{name: "Train", type: "ground", icon: "http://lorempixel.com/100/50/transport/6"}],
+
+
+	getValue: "name",
+
+	template: {
+		type: "iconRight",
+		fields: {
+			iconSrc: "icon"
+		}
+	}
+};
+
+$("#template-icon-right").easyAutocomplete(options);
+	</script>
+</body>
+</html>

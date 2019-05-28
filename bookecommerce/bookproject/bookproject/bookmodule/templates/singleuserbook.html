@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block userbookdisplay %}
+{% load static %}
+<script src="{% static 'js/okzoom.js' %}"></script>
+<script>
+    $(function(){
+      $('#example').okzoom({
+        width: 150,
+        height: 150,
+        border: "1px solid black",
+        shadow: "0 0 5px #000"
+      });
+    });
+  </script>
+	<div class="banner">
+		
+		<div class="">
+			<div class="w3l_banner_nav_right_banner3">
+				<h3>Best Deals For New Books<span class="blink_me"></span></h3>
+			</div>
+			<div class="agileinfo_single">
+				<!-- <h5 class="text-center">{{singlebook.bookName}}</h5> -->
+				<div class="col-md-4 agileinfo_single_left">
+					<img id="example" src="{{singleuserbook.bookImage.url}}" alt=" " class="img-responsive" />
+
+				</div>
+
+				<div class="col-md-8 agileinfo_single_right">
+					<div class="rating1">
+						<span class="starRating">
+							<input id="rating5" type="radio" name="rating" value="5">
+							<label for="rating5">5</label>
+							<input id="rating4" type="radio" name="rating" value="4">
+							<label for="rating4">4</label>
+							<input id="rating3" type="radio" name="rating" value="3" checked>
+							<label for="rating3">3</label>
+							<input id="rating2" type="radio" name="rating" value="2">
+							<label for="rating2">2</label>
+							<input id="rating1" type="radio" name="rating" value="1">
+							<label for="rating1">1</label>
+						</span>
+					</div>
+					<div class="w3agile_description">
+						<h1>{{singleuserbook.bookName}}</h1> <br>
+
+						<div class="col-sm-4">
+							<h4> 
+								<b>Language </b> <br>
+								 <br><b>Binding </b><br>
+								  <br><b>ISBN </b><br>
+								   <br><b>Gener </b><br>
+								    <br><b>Edition </b><br>
+								     <br><b>Pages </b><br>
+								      <br><b>Stock </b><br>
+							</h4>
+						</div>
+						<div class="col-sm-4">
+							<h4>
+								<label class="col-sm-offset-2">{{singleuserbook.bookLanguage}}</label> <br>
+								 <br><label class="col-sm-offset-2">{{singleuserbook.bookBinding}}</label><br>
+								 <br><label class="col-sm-offset-2">{{singleuserbook.bookISBN}}</label> <br>
+								 <br><label class="col-sm-offset-2">{{singleuserbook.bookGener}}</label><br>
+								 <br><label class="col-sm-offset-2">{{singleuserbook.bookEdition}}</label> <br>
+								 <br><label class="col-sm-offset-2">{{singleuserbook.bookPages}}</label><br>
+								 <br><label class="col-sm-offset-2">{{singleuserbook.bookStock}}</label><br>
+							</h4>
+						</div><br>
+					</div>
+
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+#id_bookName,#id_username,#id_password1,#id_email,#id_bookLanguage,#id_bookBinding,#id_bookPrice,#id_bookISBN,#id_bookGener,#id_bookEdition,#id_bookPages,#id_bookStock,#id_nameOfUser,#id_userAddress
+{
+ 	border-radius: 0px!important;
+ 	padding: 15px!important;
+ 	height: 55px!important;
+ }
+
+ 	.btnclr{
+ 	border-radius: 0px;
+    margin-top: 10px;
+    width: 200px;
+    height: 45px;
+    padding: 10px;
+ }
+ .asteriskField{
+ 	color: red;
+ }
+
+ .addbooktitle{
+ 	height: 150px!important;
+ 	border-radius: 0px;
+ }
+
+ .titletextaddbook{
+ 	margin-top: -30px!important;
+ }
+ .xxxx{
+    background: linear-gradient(to left,skyblue,pink)!important;
+  }
